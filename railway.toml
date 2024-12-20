@@ -3,6 +3,6 @@ builder = "dockerfile"
 dockerfilePath = "./FireStoreIoTAppointmentsService/Dockerfile"
 
 [deploy]
-startCommand = "./FireStoreIoTAppointmentsService"
+startCommand = "/app/FireStoreIoTAppointmentsService"
 restartPolicyType = "always"
 healthcheckPath = "/health"
