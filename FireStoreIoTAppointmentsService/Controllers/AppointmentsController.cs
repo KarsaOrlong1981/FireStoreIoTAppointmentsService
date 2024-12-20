@@ -15,6 +15,12 @@ namespace IoTAppointmentsService.Controllers
             _appointmentService = appointmentService;
         }
 
+        [HttpGet("Ping")]
+        public bool GetPing()
+        {
+            return true;
+        }
+
         [HttpGet("All")]
         public IEnumerable<Appointment> GetAllAppointments()
         {
