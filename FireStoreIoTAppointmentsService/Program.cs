@@ -2,6 +2,9 @@ using IoTAppointmentsService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://*:{port}");
+builder.Services.AddHealthChecks();
 // Add services to the container.
 builder.Services.AddCors(options =>
 {
@@ -25,6 +28,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseHealthChecks("/health");
 
 app.UseHttpsRedirection();
 
