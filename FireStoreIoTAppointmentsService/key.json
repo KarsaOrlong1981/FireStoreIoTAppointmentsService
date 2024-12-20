@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "iot-bridge-appointments",
+  "private_key_id": "320de7b76c3c2a63e7ad47a487a92913b27cb96a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDQ7dJtWfkSB4pV\nt9ghaN1gIQEbgCm67r8O0jGSbdtCtuxgYc55Twx324acAv9/4QqMR6wZuLU6dU/t\nlr6IlcMUoBlYr++YXZ8hQ6Ijn0SMcEuVpJXfX3g7BiUGAb9MdwRjxf/aVQZcjUHi\nsT+qHMI5h415r5FepxtXaLoTcoj+lxE466Wju30ftkKV9mhSdWnF+ZD1a7qO9l5+\nwiPaBZmjqysdwh4Z7AcCEkIP9k1ThX1RrMW3CdzmQNGsAVh7LYF2IdGGTTc+Z4WX\nQ6UqZ3dA3v1RUzDGCbIE0AjKJDkhmLECowI6lYT/HlZDoqURDTIIcvh7pAEtWC0s\nVr+lMfjTAgMBAAECggEACcELUZxMEDcWkpk/rOeha4splb1uX/zPd1isLyLpLqct\nnUj+WRQuB9Z8Oq0P0p+Qsis9HKz5QQkYZIY6JP72REXpM7EbECj8Hz3HbxRQy0xe\n1atWbT70H6/8wIK1Cf6Fz5v/LZP0n740ij8uMrn0U2KXDKGmuXLhyDs/x11R31jb\n0chISDCZQmaAnCLcw9LfkCAtaj5fj6BmEAmWwnY4DiB9V0nCfEB5Y2IVPy2JiR2v\nOqdU/l8NYU+T+FBMc3gUDEbrQVvvR+mKm800irECoVSka6eRO6XDvfXo2mcK+TDV\nGWB+szNkOXJTwtQMaPwoVJfkZj0jlof00AdGGFznUQKBgQD+0H8OTqK2bgbMmR65\ngFd1Eg8SlqnZ5DMH0/R4FB0gdillaqR8GEeo314HxnIewZC3j9nzIhlgCErhjZ25\nX7aL0hvruhyH6AqRn3p0YvtL3i4M6+c2qCDHwiXbmNPPftQCCNO+bXqDvMiqaQeA\nB4im5JO9PzqTO4Zm1UUxCaxCiQKBgQDR5qwspHsiM08Z16A/EJ7NUpMZAu8hkQYw\nOf2aQQsKkONnLAmLFH+5Ckn4h3o/zqA1tMerFjuBDEoAhuW/My61sAvZcnP1C/Cy\ne2KjnBdp26BPR7hgXt2A41a++WBAHcdAxBJ5Ay0R3fgVdZr1F4bU/DGztW+p0tga\n2OqARlG5ewKBgE7A47PpS9K0OLe9T0inyN/u3+ev1vj31WnC8Vi3ZrUkr/CfQAz2\neBdSSb5/b7/ftTl2ZTcGv+71QSdq3GdxlHqsSmLVl4HNjo6pSnB0MxSkq3jk5AX5\neoAimg6/sh78JMwoLEE7ltTmYOKCKYZBTdO+64Ze51yf1g8sNQFN6wZ5AoGAHLqf\n0jRpDhNLvlO/ASK7OYsVyxSVulhpKmylg1lns3iFR3fFjp2tpZv85+FTICydzPwD\nYC1Y057k+hF8nKDawc9or8h0ipOpzCQLKi2RHtIKrQ858ybI1n1HQDhNrjjlLr4n\ncRy4LHvfGsDQBr/Dmp8yBlDNCcdsALCz1/7H7MUCgYEA0W+kt4J0WhuAFPLgkpIE\nlWDETczBnx2B7EgHr/p27r6Xmfcq3JCJaiE2WpS7C2zNRC6aZiQ0n7UZSUfuGROx\ncH5LzSy+WGWEZ1yBBXBFEXN4tVdy/p2ZNHnCYRqOPkLsviI0rZy2FIwEsk5wE5g3\n3fAbekyV0Ydws9IUx8RGZpE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-qguvl@iot-bridge-appointments.iam.gserviceaccount.com",
+  "client_id": "111884155017165360804",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-qguvl%40iot-bridge-appointments.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
