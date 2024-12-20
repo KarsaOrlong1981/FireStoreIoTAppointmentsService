@@ -8,52 +8,57 @@ namespace IoTAppointmentsService.Controllers
     [Route("api/[controller]")]
     public class AppointmentsController : ControllerBase
     {
-        private readonly FirebaseService _firebaseService;
+        private readonly IAppointmentService _appointmentService;
 
-        public AppointmentsController(FirebaseService firebaseService)
+        public AppointmentsController(IAppointmentService appointmentService)
         {
-            _firebaseService = firebaseService;
+            _appointmentService = appointmentService;
         }
 
         [HttpGet("All")]
-        public async Task<IEnumerable<Appointment>> GetAllAppointments()
+        public IEnumerable<Appointment> GetAllAppointments()
         {
-            return await _firebaseService.GetAllAppointments();
+            return _appointmentService.GetAllAppointments();
         }
 
+        // GET: api/Appointments/ByMonth
         [HttpGet("ByMonth")]
-        public async Task<IEnumerable<Appointment>> GetAppointmentsByMonth([FromQuery] string member, [FromQuery] int year, [FromQuery] int month)
+        public IEnumerable<Appointment> GetAppointmentsByMonth([FromQuery] string member, [FromQuery] int year, [FromQuery] int month)
         {
-            return await _firebaseService.GetAppointmentByMonth(member, year, month);
+            return _appointmentService.GetAppointmentByMonth(member, year, month);
         }
 
+        // GET: api/Appointments/ByDay
         [HttpGet("ByDay")]
-        public async Task<IEnumerable<Appointment>> GetAppointmentsByDay([FromQuery] string member, [FromQuery] int year, [FromQuery] int month, [FromQuery] int day)
+        public IEnumerable<Appointment> GetAppointmentsByDay([FromQuery] string member, [FromQuery] int year, [FromQuery] int month, [FromQuery] int day)
         {
-            return await _firebaseService.GetAppointmentsByDay(member, year, month, day);
+            return _appointmentService.GetAppointmentsByDay(member, year, month, day);
         }
 
+        // GET: api/Appointments/ByYear
         [HttpGet("ByYear")]
-        public async Task<IEnumerable<Appointment>> GetAppointmentsByYear([FromQuery] string member, [FromQuery] int year)
+        public IEnumerable<Appointment> GetAppointmentsByYear([FromQuery] string member, [FromQuery] int year)
         {
-            return await _firebaseService.GetAppointmentsByYear(member, year);
+            return _appointmentService.GetAppointmentsByYear(member, year);
         }
 
+        // GET: api/Appointments/ForMember
         [HttpGet("ForMember")]
-        public async Task<IEnumerable<Appointment>> GetAppointmentsForMember([FromQuery] string member)
+        public IEnumerable<Appointment> GetAppointmentsForMember([FromQuery] string member)
         {
-            return await _firebaseService.GetAppointmentsForMember(member);
+            return _appointmentService.GetAppointmentsForMember(member);
         }
 
+        // PUT: api/Appointments/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAppointment(string id, [FromBody] Appointment appointment)
+        public IActionResult UpdateAppointment(string id, [FromBody] Appointment appointment)
         {
             if (appointment.Id != id)
             {
                 return BadRequest("The ID in the URL does not match the ID in the request body.");
             }
 
-            var updated = await _firebaseService.UpdateAppointment(appointment);
+            var updated = _appointmentService.UpdateAppointment(appointment);
             if (updated)
             {
                 return NoContent();
@@ -62,28 +67,30 @@ namespace IoTAppointmentsService.Controllers
             return NotFound();
         }
 
+        // POST: api/Appointments
         [HttpPost]
-        public async Task<IActionResult> AddAppointment([FromBody] Appointment appointment)
+        public IActionResult AddAppointment([FromBody] Appointment appointment)
         {
-            await _firebaseService.AddAppointment(appointment);
+            _appointmentService.AddAppointment(appointment);
             return CreatedAtAction(nameof(AddAppointment), appointment);
         }
 
+        // DELETE: api/Appointments/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAppointment(string id)
+        public IActionResult DeleteAppointment(string id)
         {
-            var deleted = await _firebaseService.DeleteAppointment(id);
-            if (deleted)
+            if (_appointmentService.DeleteAppointment(id))
             {
                 return NoContent();
             }
             return NotFound();
         }
 
+        // DELETE: api/Appointments
         [HttpDelete]
-        public async Task<IActionResult> DeleteAllAppointments()
+        public IActionResult DeleteAllAppointments()
         {
-            await _firebaseService.DeleteAllAppointments();
+            _appointmentService.DeleteAllAppointments();
             return NoContent();
         }
     }
