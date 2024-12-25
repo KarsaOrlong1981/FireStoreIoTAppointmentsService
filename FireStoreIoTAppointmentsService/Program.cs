@@ -18,6 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<ITodoService, TodoService>();
 builder.Services.AddSingleton<IClientService, ClientService>();
 builder.Services.AddSingleton<IFirebaseService,FirebaseService>();
 builder.Services.AddSingleton<IAppointmentService, AppointmentService>();

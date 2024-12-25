@@ -8,13 +8,11 @@ namespace IoTAppointmentsService.Services
     {
         private readonly AppointmentsDbContext _context;
         private readonly IFirebaseService _firebaseService;
-        private readonly IClientService _clientService;
 
-        public AppointmentService(IFirebaseService firebaseService, IClientService clientService)
+        public AppointmentService(IFirebaseService firebaseService)
         {
             _context = new AppointmentsDbContext();
             _firebaseService = firebaseService;
-            _clientService = clientService;
             _context.Database.EnsureCreated();
         }
 
@@ -65,20 +63,7 @@ namespace IoTAppointmentsService.Services
             _context.SaveChanges();
             var title = $"{appointment.Member} hat einen neuen Termin eingetragen.";
             var message = $"Am {appointment.Date.Date.ToString("dd.MM.yyyy")}: \n{appointment.Description}";
-            await SendNotificationToAllClients(title, message);
-        }
-
-        private async Task SendNotificationToAllClients(string title, string message)
-        {
-            try
-            {
-                var clients = await _clientService.GetAllClients();
-                foreach (var client in clients)
-                {
-                    await _firebaseService.SendNotificationAsync(client.DeviceToken, title, message);
-                }
-            }
-            catch (Exception ex) { }  
+            await _firebaseService.SendNotificationToAllClients(title, message);
         }
 
         public async Task<bool> DeleteAppointment(string id)
@@ -90,7 +75,7 @@ namespace IoTAppointmentsService.Services
                 _context.SaveChanges();
                 var title = $"{appointment.Member} hat einen Termin gelöscht.";
                 var message = $"Am {appointment.Date.Date.ToString("dd.MM.yyyy")}: \n{appointment.Description}";
-                await SendNotificationToAllClients(title, message);
+                await _firebaseService.SendNotificationToAllClients(title, message);
                 return true;
             }
             return false;
@@ -113,7 +98,7 @@ namespace IoTAppointmentsService.Services
             _context.SaveChanges();
             var title = $"{updatedAppointment.Member} hat Änderungen an einem Termin vorgenommen.";
             var message = $"Am {updatedAppointment.Date.Date.ToString("dd.MM.yyyy")}: \n{updatedAppointment.Description}";
-            await SendNotificationToAllClients(title, message);
+            await _firebaseService.SendNotificationToAllClients(title, message);
             return true; // Erfolgreich aktualisiert
         }
 

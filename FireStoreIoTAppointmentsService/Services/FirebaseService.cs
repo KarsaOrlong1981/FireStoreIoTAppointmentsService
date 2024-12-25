@@ -1,4 +1,5 @@
 ﻿using FireStoreIoTAppointmentsService;
+using FireStoreIoTAppointmentsService.Services;
 using Google.Apis.Auth.OAuth2;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -10,15 +11,30 @@ namespace IoTAppointmentsService.Services
     {
         private readonly string _firebaseUrl = "https://fcm.googleapis.com/v1/projects/fir-notificationsservice/messages:send";
         private readonly GoogleCredential _googleCredential;
+        private readonly IClientService _clientService;
 
-        public FirebaseService()
+        public FirebaseService(IClientService clientService)
         {
             try
             {
+                _clientService = clientService;
                 _googleCredential = GoogleCredential.FromJson(Constants.ServiceAccountJson)
                 .CreateScoped("https://www.googleapis.com/auth/firebase.messaging");
             }
             catch (Exception ex) { }   
+        }
+
+        public async Task SendNotificationToAllClients(string title, string message)
+        {
+            try
+            {
+                var clients = await _clientService.GetAllClients();
+                foreach (var client in clients)
+                {
+                    await SendNotificationAsync(client.DeviceToken, title, message);
+                }
+            }
+            catch (Exception ex) { }
         }
 
         public async Task<string> SendNotificationAsync(string deviceToken, string title, string body)
