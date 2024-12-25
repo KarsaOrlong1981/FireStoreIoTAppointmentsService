@@ -19,9 +19,10 @@ namespace IoTAppointmentsService.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TodoTask>()
-                .HasOne(t => t.TodoList)
-                .WithMany(l => l.Todos)
-                .HasForeignKey(t => t.TodoListId);
+                .HasOne<TodoList>() // Optional: Navigationseigenschaft nicht mehr vorhanden
+                .WithMany(t => t.Todos) // Wenn `Todos` entfernt, hier anpassen
+                .HasForeignKey(t => t.TodoListId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

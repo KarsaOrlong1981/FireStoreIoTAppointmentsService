@@ -7,6 +7,5 @@
         public bool IsDone { get; set; }
         public ECategorieType CategorieType { get; set; }
         public string TodoListId { get; set; }
-        public TodoList TodoList { get; set; }
     }
 }
