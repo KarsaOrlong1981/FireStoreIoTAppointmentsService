@@ -110,11 +110,44 @@ namespace FireStoreIoTAppointmentsService.Services
 
         public async Task DeleteTodoTaskAsync(string todoTaskId)
         {
-            var task = await _dbContext.TodoTasks.FindAsync(todoTaskId);
-            if (task != null)
+            try
             {
+                // 1. Finde die TodoTask in der Datenbank
+                var task = await _dbContext.TodoTasks.FindAsync(todoTaskId);
+                if (task == null)
+                {
+                    throw new ApplicationException($"TodoTask with ID {todoTaskId} not found.");
+                }
+
+                // 2. Finde die zugehörige TodoList
+                var todoList = await _dbContext.TodoLists
+                    .Include(tl => tl.Todos)
+                    .FirstOrDefaultAsync(tl => tl.Todos.Any(t => t.Id == todoTaskId));
+
+                if (todoList != null)
+                {
+                    // 3. Entferne die Aufgabe aus der TodoList
+                    var taskToRemove = todoList.Todos.FirstOrDefault(t => t.Id == todoTaskId);
+                    if (taskToRemove != null)
+                    {
+                        todoList.Todos.Remove(taskToRemove);
+                        await _dbContext.SaveChangesAsync(); // Speichere Änderungen an der TodoList
+                    }
+                }
+
+                // 4. Lösche die Aufgabe aus der TodoTasks-Tabelle
                 _dbContext.TodoTasks.Remove(task);
-                await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync(); // Speichere die Löschung
+            }
+            catch (HttpRequestException ex)
+            {
+                //logger.Error(ex, $"An error occurred while deleting TodoTask with ID {todoTaskId}.");
+                throw new ApplicationException($"Error deleting TodoTask with ID {todoTaskId}.", ex);
+            }
+            catch (Exception ex)
+            {
+                //logger.Error(ex, "An unexpected error occurred while deleting TodoTask.");
+                throw;
             }
         }
     }
