@@ -46,6 +46,30 @@ namespace FireStoreIoTAppointmentsService.Controllers
             await _todoService.DeleteTodoListAsync(id);
             return Ok("TodoList deleted successfully.");
         }
+
+        [HttpGet("Task/ByListId/{listId}")]
+        public async Task<IActionResult> GetTodoTasksByListId(string listId)
+        {
+            var tasks = await _todoService.GetTodoTasksByListIdAsync(listId);
+            return Ok(tasks);
+        }
+
+        [HttpPost("Task")]
+        public async Task<IActionResult> CreateOrUpdateTodoTask([FromBody] TodoTask todoTask)
+        {
+            if (todoTask == null || string.IsNullOrEmpty(todoTask.Description))
+                return BadRequest("Invalid TodoTask data.");
+
+            await _todoService.CreateOrUpdateTodoTaskAsync(todoTask);
+            return Ok("TodoTask added/updated successfully.");
+        }
+
+        [HttpDelete("Task/{id}")]
+        public async Task<IActionResult> DeleteTodoTask(string id)
+        {
+            await _todoService.DeleteTodoTaskAsync(id);
+            return Ok("TodoTask deleted successfully.");
+        }
     }
 
 }

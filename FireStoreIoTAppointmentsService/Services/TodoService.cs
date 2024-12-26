@@ -1,5 +1,4 @@
-﻿using Google.Apis.Services;
-using IoTAppointmentsService.Database;
+﻿using IoTAppointmentsService.Database;
 using IoTAppointmentsService.Models;
 using IoTAppointmentsService.Services;
 using Microsoft.EntityFrameworkCore;
@@ -82,6 +81,40 @@ namespace FireStoreIoTAppointmentsService.Services
                 var title = $"{listName} wurde gelöscht.";
                 var message = $"Die liste {listName} wurde entgültig gelöscht.";
                 await _firebaseService.SendNotificationToAllClients(title, message);
+            }
+        }
+
+        public async Task<List<TodoTask>> GetTodoTasksByListIdAsync(string todoListId)
+        {
+            return await _dbContext.TodoTasks
+                .Where(t => t.TodoListId == todoListId)
+                .ToListAsync();
+        }
+
+        public async Task CreateOrUpdateTodoTaskAsync(TodoTask todoTask)
+        {
+            var existingTask = await _dbContext.TodoTasks.FindAsync(todoTask.Id);
+            bool isNewTask = existingTask == null;
+
+            if (!isNewTask)
+            {
+                _dbContext.Entry(existingTask).CurrentValues.SetValues(todoTask);
+            }
+            else
+            {
+                await _dbContext.TodoTasks.AddAsync(todoTask);
+            }
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteTodoTaskAsync(string todoTaskId)
+        {
+            var task = await _dbContext.TodoTasks.FindAsync(todoTaskId);
+            if (task != null)
+            {
+                _dbContext.TodoTasks.Remove(task);
+                await _dbContext.SaveChangesAsync();
             }
         }
     }
